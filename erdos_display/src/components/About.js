@@ -16,7 +16,7 @@ const About = () => (
                 <Grid.Row >
                   <Grid.Column></Grid.Column>
                   <Grid.Column width={10}>
-                  
+
                     <div>
                       <b>
                         <p>
@@ -43,7 +43,7 @@ const About = () => (
                         </p>
                         <p>
                         This visualization also inculdes a search function where the user can either type in an authors name or select their name from the
-                        dropdown list.
+                        dropdown list.  Once selected, the author's node will turn red in the display.  
                         </p>
                       </b>
                     </div>
