@@ -1,0 +1,67 @@
+.Main {
+  text-align: center;
+}
+
+.Main-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Main-logo {
+    animation: Main-logo-spin infinite 20s linear;
+  }
+}
+
+.Main-header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Main-link {
+  color: #61dafb;
+}
+
+@keyframes Main-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Main-GraphArea {
+  width: '95%';
+  overflow: auto;
+  float: none;
+  margin: 0 auto;
+  border:'1px solid black';
+}
+
+.d3_tabs {
+  height: 95%;
+  width: 95%;
+  float: none;
+  margin: 0 auto;
+}
+
+.x {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
+}
+
+.x svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,125 @@
+<!--This file plots data the subgraph of the collaboration graph
+induced by co-authors of Paul Erdos.  Its vertices are people
+with Erdos number 1, and two authors are joined by an edge if
+they have published a joint paper (with or without other collaborators).
+Paul Erdos himself and people with Erdos number 2 are not included.
+
+Refference:   https://www.oakland.edu/enp/thedata/
+              https://files.oakland.edu/users/grossman/enp/erdos1graph.html-->
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title> Mathematicians with Erdos Number 1 Joint Publications </title>
+<style>
+
+	body {
+		background-color: white
+	}
+      
+	.links line {
+		stroke: #aaa;
+		stroke-opacity: 0.8;
+		stroke-width: 0.3px;
+	}
+	
+	.nodes circle {
+		stroke: #fff;
+		stroke-width: 2.5px;
+	}
+
+</style>
+<svg width="2000" height="2000"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+      var svg = d3.select("svg"),
+          width =+ svg.attr("width"),
+          height =+ svg.attr("height");
+            
+      var simulation =  d3.forceSimulation()
+                          .force("link", d3.forceLink().id(function(d) { return d.id; }))
+                          .force("charge", d3.forceManyBody())
+                          .force("center", d3.forceCenter(width / 2, height / 2));
+      
+      d3.json("erdos.json", function(error, graph) {
+        if (error) throw error;
+      
+        var link = svg.append("g")
+                      .attr("class", "links")
+                      .selectAll("line")
+                      .data(graph.links)
+                      .enter().append("line")
+                      .attr("stroke-width", function(d) { return Math.sqrt(d.value) / 4; });
+      
+        var node = svg.append("g")
+                      .attr("class", "nodes")
+                      .selectAll("circle")
+                      .data(graph.nodes)
+                      .enter().append("circle")
+                			.attr("r", function(d) {
+                                  return Math.sqrt(d.pubs)*1.5;
+                      })
+                      .attr("fill", "#0099ff")
+                      .call(d3.drag()
+                      .on("start", dragstarted)
+                      .on("drag", dragged)
+                      .on("end", dragended)
+                      );
+                            
+        node.append("title")
+            .text(function(d) {
+                dc = '';
+                if (d.name.indexOf('*') != -1) {
+                  name = d.name.replace('*', '');
+                  dc = ' (DECEASED)';
+                }
+                else {
+                  name = d.name;
+                }
+                p = name.split(',');
+                name = p[1].concat(' ');
+                name = name.concat(p[0]);
+                name = name.concat(dc);
+                text = name.concat("\n ");
+                text = text.concat(d.pubs);
+                text = text.concat(" Coauthor(s) with Erdos number 2");
+                return text;
+            });
+      
+        simulation
+            .nodes(graph.nodes)
+            .on("tick", ticked);
+      
+        simulation.force("link")
+                  .links(graph.links);
+      
+        function ticked() {
+          link
+              .attr("x1", function(d) { return d.source.x; })
+              .attr("y1", function(d) { return d.source.y; })
+              .attr("x2", function(d) { return d.target.x; })
+              .attr("y2", function(d) { return d.target.y; });
+      
+          node
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; });
+        }
+      });
+      
+      function dragstarted(d) {
+        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+      }
+      
+      function dragged(d) {
+          d.fx = d3.event.x;
+          d.fy = d3.event.y;
+      }
+      
+      function dragended(d) {
+          if (!d3.event.active) simulation.alphaTarget(0);
+              d.fx = null;
+              d.fy = null;
+      }
+
+</script>
