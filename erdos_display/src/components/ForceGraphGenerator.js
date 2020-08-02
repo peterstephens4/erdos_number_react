@@ -15,8 +15,8 @@ export function runForceGraph(container, linksData, nodesData, author) {
     }
 
     const containerRect = container.getBoundingClientRect();
-    const height = containerRect.height;
-    const width = containerRect.width;
+    const height =+ containerRect.height;
+    const width =+ containerRect.width;
 
     const drag = (simulation) => {
     const dragstarted = (d) => {
@@ -46,15 +46,21 @@ export function runForceGraph(container, linksData, nodesData, author) {
         return node.name === author ? 'red' : '#0099ff'
     }
 
-    const simulation = d3.forceSimulation(nodes)
+    /*const simulation = d3.forceSimulation(nodes)
                          .force("link", d3.forceLink(links).id(d => d.id))
                          .force("charge", d3.forceManyBody().strength(-150))
                          .force("x", d3.forceX())
-                         .force("y", d3.forceY());
+                         .force("y", d3.forceY());*/
+
+    const simulation =  d3.forceSimulation(nodes)
+                          .force("link", d3.forceLink(links).id(d => d.id))
+                          .force("charge", d3.forceManyBody().strength(-50))
+                          .force("center", d3.forceCenter(width / 2, height / 2));
 
     const svg = d3.select(container)
+                  .append("div")
                   .append("svg")
-                  .attr("viewBox", [-width / 2, -height / 2, width, height])
+                  .attr("viewBox", [-width / 2, -height / 2, 2*width, 2*height])
                   .call(d3.zoom().on("zoom", function () {
                         svg.attr("transform", d3.event.transform);})
                   );
@@ -65,7 +71,9 @@ export function runForceGraph(container, linksData, nodesData, author) {
                     .selectAll("line")
                     .data(links)
                     .join("line")
-                    .attr("stroke-width", function(d) { return Math.sqrt(d.value) / 10; });
+                    .attr("stroke-width", function(d) { 
+                        return Math.sqrt(d.value) / 10; 
+                    });
 
     const node = svg.append("g")
                     .attr("stroke", "#aaa")
@@ -118,4 +126,3 @@ export function runForceGraph(container, linksData, nodesData, author) {
         }
     };
 }
-

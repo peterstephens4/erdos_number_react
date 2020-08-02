@@ -52,9 +52,16 @@ export function Main(auth) {
 
                 <Grid.Row >
                     <Grid.Column>
-                        <div className="Main-GraphArea" style={{border:'1px solid gray', width: '95%', float: 'none', margin: '0 auto', overflow: 'auto'}}>
+                        <div className="Main-GraphArea" style={{border:'1px solid gray', 
+                                                                width: '95%', 
+                                                                display: 'block',
+                                                                float: 'none', 
+                                                                margin: '0 auto', 
+                                                                overflow: 'scroll'}}
+                        >
                             <ForceGraphContainer author={author} 
-                                                 authors={authors} />
+                                                 authors={authors} 
+                            />
                         </div>
                     </Grid.Column>
                 </Grid.Row>

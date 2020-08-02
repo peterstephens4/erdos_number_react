@@ -14,14 +14,15 @@
 }
 
 .Main-header {
-  background-color: #282c34;
+  /*background-color: #282c34;*/
+  background-color: rgb(49, 49, 49);
   min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(2, 177, 2);
 }
 
 .Main-link {
@@ -37,31 +38,12 @@
   }
 }
 
+/*
 .Main-GraphArea {
   width: '95%';
-  overflow: auto;
-  float: none;
-  margin: 0 auto;
-  border:'1px solid black';
+  overflow: 'scroll';
+  float: 'none';
+  margin: '0 auto';
+  border:'2px solid pink';
 }
-
-.d3_tabs {
-  height: 95%;
-  width: 95%;
-  float: none;
-  margin: 0 auto;
-}
-
-.x {
-  width: 100%;
-  height: 80vh;
-  position: relative;
-  background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
-}
-
-.x svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
+*/
